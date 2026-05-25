@@ -3,14 +3,14 @@
 @section('title', 'Stok')
 
 @section('content')
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="font-semibold mb-4">Tambah Stok Masuk</h3>
+<div class="ruto-grid-2 ruto-fade-in">
+    <div class="ruto-card ruto-card-padded">
+        <h3 class="ruto-card-title">Tambah Stok Masuk</h3>
         <form action="{{ route('stok.store') }}" method="POST">
             @csrf
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Produk</label>
-                <select name="produk_id" class="w-full border-gray-300 rounded-md shadow-sm" required>
+            <div class="ruto-field">
+                <label>Produk</label>
+                <select name="produk_id" class="ruto-select" required>
                     <option value="">Pilih produk</option>
                     @foreach ($produk as $item)
                         <option value="{{ $item->id }}" @selected(old('produk_id') == $item->id)>
@@ -18,64 +18,72 @@
                         </option>
                     @endforeach
                 </select>
-                @error('produk_id')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
+                @error('produk_id')<p class="ruto-field-error">{{ $message }}</p>@enderror
             </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah</label>
-                <input type="number" name="jumlah" value="{{ old('jumlah') }}" min="1" class="w-full border-gray-300 rounded-md shadow-sm" required>
-                @error('jumlah')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
+            <div class="ruto-field">
+                <label>Jumlah</label>
+                <input type="number" name="jumlah" value="{{ old('jumlah') }}" min="1" class="ruto-input" required>
+                @error('jumlah')<p class="ruto-field-error">{{ $message }}</p>@enderror
             </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                <input type="date" name="tanggal" value="{{ old('tanggal', today()->format('Y-m-d')) }}" class="w-full border-gray-300 rounded-md shadow-sm" required>
-                @error('tanggal')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
+            <div class="ruto-field">
+                <label>Tanggal</label>
+                <input type="date" name="tanggal" value="{{ old('tanggal', today()->format('Y-m-d')) }}" class="ruto-input" required>
+                @error('tanggal')<p class="ruto-field-error">{{ $message }}</p>@enderror
             </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan</label>
-                <textarea name="keterangan" rows="2" class="w-full border-gray-300 rounded-md shadow-sm">{{ old('keterangan') }}</textarea>
+            <div class="ruto-field">
+                <label>Keterangan</label>
+                <textarea name="keterangan" rows="2" class="ruto-textarea">{{ old('keterangan') }}</textarea>
             </div>
-            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Simpan Stok</button>
+            <button type="submit" class="ruto-btn-primary">Simpan Stok</button>
         </form>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="font-semibold mb-4">Stok Produk Saat Ini</h3>
+    <div class="ruto-card ruto-card-padded">
+        <h3 class="ruto-card-title">Stok Produk Saat Ini</h3>
         <div class="max-h-96 overflow-y-auto">
             @foreach ($produk as $item)
-                <div class="flex justify-between py-2 border-b text-sm">
+                <div class="ruto-list-item">
                     <span>{{ $item->nama_produk }}</span>
-                    <span class="{{ $item->stok < 10 ? 'text-red-600 font-medium' : '' }}">{{ $item->stok }} unit</span>
+                    @if ($item->stok < 10)
+                        <span class="ruto-badge ruto-badge-danger">{{ $item->stok }} unit</span>
+                    @else
+                        <span>{{ $item->stok }} unit</span>
+                    @endif
                 </div>
             @endforeach
         </div>
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow mt-6 overflow-hidden">
-    <div class="px-4 py-3 border-b font-semibold">Riwayat Stok Masuk Terbaru</div>
-    <table class="min-w-full text-sm">
-        <thead class="bg-gray-50">
-            <tr>
-                <th class="px-4 py-2 text-left">Tanggal</th>
-                <th class="px-4 py-2 text-left">Produk</th>
-                <th class="px-4 py-2 text-right">Jumlah</th>
-                <th class="px-4 py-2 text-left">Keterangan</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($riwayat as $row)
-                <tr class="border-t">
-                    <td class="px-4 py-2">{{ $row->tanggal->format('d/m/Y') }}</td>
-                    <td class="px-4 py-2">{{ $row->produk->nama_produk }}</td>
-                    <td class="px-4 py-2 text-right">+{{ $row->jumlah }}</td>
-                    <td class="px-4 py-2">{{ $row->keterangan ?? '-' }}</td>
-                </tr>
-            @empty
+<div class="ruto-card ruto-fade-in-delay-1 mt-6">
+    <div class="ruto-card-padded pb-0">
+        <h3 class="ruto-card-title mb-0">Riwayat Stok Masuk Terbaru</h3>
+    </div>
+    <div class="ruto-table-wrap">
+        <table class="ruto-table">
+            <thead>
                 <tr>
-                    <td colspan="4" class="px-4 py-4 text-center text-gray-500">Belum ada riwayat stok masuk.</td>
+                    <th>Tanggal</th>
+                    <th>Produk</th>
+                    <th class="text-right">Jumlah</th>
+                    <th>Keterangan</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse ($riwayat as $row)
+                    <tr>
+                        <td>{{ $row->tanggal->format('d/m/Y') }}</td>
+                        <td>{{ $row->produk->nama_produk }}</td>
+                        <td class="text-right"><span class="ruto-badge ruto-badge-success">+{{ $row->jumlah }}</span></td>
+                        <td>{{ $row->keterangan ?? '-' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="ruto-empty">Belum ada riwayat stok masuk.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

@@ -1,0 +1,1286 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+    --ruto-brand: #e6a227;
+    --ruto-brand-dark: #c4881a;
+    --ruto-brand-light: #f5d998;
+    --ruto-brand-soft: rgba(230, 162, 39, 0.14);
+    --ruto-white: #ffffff;
+    --ruto-warm: #fffbf5;
+    --ruto-cream: #fff9f0;
+    --ruto-text: #2e2e2e;
+    --ruto-text-muted: #6b6560;
+    --ruto-sidebar-width: 17.5rem;
+}
+
+/* Animations */
+@keyframes rutoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rutoFadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes rutoShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes rutoPulseSoft {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(230, 162, 39, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(230, 162, 39, 0);
+    }
+}
+
+@keyframes rutoNavIn {
+    from {
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes rutoRingSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rutoOrbFloat {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(8px, -12px) scale(1.08);
+    }
+}
+
+.ruto-fade-in {
+    animation: rutoFadeIn 0.5s ease forwards;
+}
+
+.ruto-fade-in-delay-1 {
+    animation: rutoFadeIn 0.5s ease 0.08s forwards;
+    opacity: 0;
+}
+
+.ruto-fade-in-delay-2 {
+    animation: rutoFadeIn 0.5s ease 0.16s forwards;
+    opacity: 0;
+}
+
+.ruto-fade-in-delay-3 {
+    animation: rutoFadeIn 0.5s ease 0.24s forwards;
+    opacity: 0;
+}
+
+.ruto-fade-in-delay-4 {
+    animation: rutoFadeIn 0.5s ease 0.32s forwards;
+    opacity: 0;
+}
+
+.ruto-fade-in-delay-5 {
+    animation: rutoFadeIn 0.5s ease 0.4s forwards;
+    opacity: 0;
+}
+
+.ruto-fade-in-delay-6 {
+    animation: rutoFadeIn 0.5s ease 0.5s forwards;
+    opacity: 0;
+}
+
+/* Layout */
+.ruto-admin-body {
+    font-family: 'Outfit', sans-serif;
+    background:
+        radial-gradient(circle at 100% 0%, var(--ruto-brand-soft) 0%, transparent 40%),
+        linear-gradient(180deg, var(--ruto-warm) 0%, #f5f3ef 100%);
+    min-height: 100vh;
+    color: var(--ruto-text);
+}
+
+.ruto-admin-shell {
+    display: flex;
+    min-height: 100vh;
+    gap: 0;
+    padding: 0.85rem 0.85rem 0.85rem 0;
+}
+
+/* ─── Sidebar: floating glass (anti-mainstream vs dark rail) ─── */
+.ruto-sidebar {
+    width: var(--ruto-sidebar-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0.85rem;
+    height: calc(100vh - 1.7rem);
+    margin-left: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.35rem;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+        0 0 0 1px rgba(230, 162, 39, 0.12),
+        0 20px 50px rgba(196, 136, 26, 0.12),
+        0 4px 16px rgba(46, 46, 46, 0.04);
+    overflow: hidden;
+    isolation: isolate;
+    animation: rutoFadeInLeft 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ruto-sidebar-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(40px);
+    z-index: 0;
+}
+
+.ruto-sidebar-orb--1 {
+    width: 140px;
+    height: 140px;
+    top: -30px;
+    right: -40px;
+    background: rgba(230, 162, 39, 0.35);
+    animation: rutoOrbFloat 8s ease-in-out infinite;
+}
+
+.ruto-sidebar-orb--2 {
+    width: 100px;
+    height: 100px;
+    bottom: 80px;
+    left: -30px;
+    background: rgba(245, 217, 152, 0.5);
+    animation: rutoOrbFloat 10s ease-in-out infinite reverse;
+}
+
+/* Brand */
+.ruto-sidebar-brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1.35rem 1.15rem 1.15rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(230, 162, 39, 0.12);
+}
+
+.ruto-sidebar-logo-ring {
+    position: relative;
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+}
+
+.ruto-sidebar-logo-ring::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        var(--ruto-brand),
+        var(--ruto-brand-light),
+        transparent 40%,
+        var(--ruto-brand-dark),
+        var(--ruto-brand)
+    );
+    animation: rutoRingSpin 6s linear infinite;
+    opacity: 0.85;
+}
+
+.ruto-sidebar-logo-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--ruto-white);
+    box-shadow: inset 0 0 0 1px rgba(230, 162, 39, 0.15);
+}
+
+.ruto-sidebar-logo {
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ruto-sidebar-brand:hover .ruto-sidebar-logo {
+    transform: scale(1.08) rotate(-4deg);
+}
+
+.ruto-sidebar-brand-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.ruto-sidebar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--ruto-text);
+    line-height: 1.1;
+}
+
+.ruto-sidebar-sub {
+    font-size: 0.65rem;
+    color: var(--ruto-brand-dark);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+    font-weight: 500;
+}
+
+/* Nav groups */
+.ruto-sidebar-nav {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.65rem 0.75rem 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(230, 162, 39, 0.35) transparent;
+}
+
+.ruto-nav-group {
+    margin-bottom: 0.85rem;
+}
+
+.ruto-nav-group-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ruto-text-muted);
+    padding: 0 0.65rem 0.4rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ruto-nav-group-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(230, 162, 39, 0.35), transparent);
+}
+
+.ruto-nav-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/* Nav item — pill cards */
+.ruto-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.65rem 0.6rem 0.6rem;
+    border-radius: 0.85rem;
+    text-decoration: none;
+    color: var(--ruto-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.2s ease,
+        box-shadow 0.25s ease;
+    animation: rutoNavIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: var(--nav-delay, 0ms);
+}
+
+.ruto-nav-item-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: linear-gradient(135deg, rgba(230, 162, 39, 0.2), transparent 60%);
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.ruto-nav-item-icon {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 2.35rem;
+    height: 2.35rem;
+    display: grid;
+    place-items: center;
+    border-radius: 0.7rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(230, 162, 39, 0.2);
+    color: var(--ruto-brand-dark);
+    box-shadow: 0 2px 8px rgba(230, 162, 39, 0.08);
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.ruto-nav-item-icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+.ruto-nav-item-text {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+}
+
+.ruto-nav-item-arrow {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(-6px);
+    color: var(--ruto-brand-dark);
+    transition: opacity 0.2s ease, transform 0.25s ease;
+}
+
+.ruto-nav-item:hover {
+    color: var(--ruto-text);
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(230, 162, 39, 0.1);
+}
+
+.ruto-nav-item:hover .ruto-nav-item-glow {
+    opacity: 1;
+}
+
+.ruto-nav-item:hover .ruto-nav-item-icon {
+    transform: scale(1.06);
+    border-color: rgba(230, 162, 39, 0.45);
+}
+
+.ruto-nav-item:hover .ruto-nav-item-arrow {
+    opacity: 0.7;
+    transform: translateX(0);
+}
+
+.ruto-nav-item.is-active {
+    color: #fff;
+    transform: translateX(6px);
+    box-shadow:
+        0 8px 24px rgba(196, 136, 26, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    background: linear-gradient(120deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
+}
+
+.ruto-nav-item.is-active .ruto-nav-item-glow {
+    opacity: 0;
+}
+
+.ruto-nav-item.is-active .ruto-nav-item-icon {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #fff;
+    box-shadow: none;
+}
+
+.ruto-nav-item.is-active .ruto-nav-item-arrow {
+    opacity: 1;
+    color: #fff;
+    transform: translateX(2px);
+}
+
+/* User card footer */
+.ruto-sidebar-footer {
+    position: relative;
+    z-index: 1;
+    padding: 0.75rem;
+    border-top: 1px solid rgba(230, 162, 39, 0.1);
+}
+
+.ruto-user-card {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 0.7rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 249, 240, 0.9));
+    border: 1px solid rgba(230, 162, 39, 0.2);
+    box-shadow: 0 4px 14px rgba(230, 162, 39, 0.08);
+}
+
+.ruto-user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, var(--ruto-brand), var(--ruto-brand-dark));
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 12px rgba(230, 162, 39, 0.35);
+}
+
+.ruto-user-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.ruto-user-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ruto-text);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ruto-user-role {
+    font-size: 0.65rem;
+    color: var(--ruto-text-muted);
+    margin: 0.15rem 0 0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ruto-user-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+    animation: rutoPulseSoft 2.5s ease infinite;
+}
+
+.ruto-user-logout-form {
+    flex-shrink: 0;
+}
+
+.ruto-user-logout {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 0.6rem;
+    background: rgba(230, 162, 39, 0.1);
+    color: var(--ruto-brand-dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ruto-user-logout:hover {
+    background: var(--ruto-brand);
+    color: #fff;
+    transform: rotate(-8deg) scale(1.05);
+}
+
+/* Main */
+.ruto-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin-right: 0.85rem;
+    border-radius: 1.35rem;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(230, 162, 39, 0.06);
+}
+
+.ruto-topbar {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(230, 162, 39, 0.12);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    animation: rutoFadeIn 0.4s ease;
+    border-radius: 0 1.35rem 0 0;
+}
+
+.ruto-topbar-start {
+    min-width: 0;
+    flex: 1;
+}
+
+.ruto-topbar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--ruto-text);
+    margin: 0.35rem 0 0;
+    line-height: 1.15;
+}
+
+.ruto-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-shrink: 0;
+    padding-top: 0.15rem;
+}
+
+.ruto-topbar-date {
+    font-size: 0.75rem;
+    color: var(--ruto-text-muted);
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Breadcrumb artistik */
+.ruto-breadcrumb {
+    margin: 0;
+}
+
+.ruto-breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 0.1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ruto-breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.ruto-breadcrumb-link {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ruto-text-muted);
+    text-decoration: none;
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.35rem;
+    transition: color 0.2s, background 0.2s;
+}
+
+.ruto-breadcrumb-link:hover {
+    color: var(--ruto-brand-dark);
+    background: var(--ruto-brand-soft);
+}
+
+.ruto-breadcrumb-section {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ruto-brand-dark);
+    opacity: 0.75;
+    padding: 0.1rem 0.25rem;
+}
+
+.ruto-breadcrumb-current {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ruto-text);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--ruto-brand-soft), rgba(230, 162, 39, 0.08));
+    border: 1px solid rgba(230, 162, 39, 0.25);
+    box-shadow: 0 2px 8px rgba(230, 162, 39, 0.12);
+}
+
+.ruto-breadcrumb-sep {
+    display: inline-flex;
+    color: rgba(230, 162, 39, 0.55);
+    opacity: 0.8;
+}
+
+.ruto-breadcrumb-item.is-current .ruto-breadcrumb-sep {
+    display: none;
+}
+
+/* Theme toggle */
+.ruto-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.45rem 0.35rem 0.35rem;
+    border: 1px solid rgba(230, 162, 39, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.ruto-theme-toggle:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(230, 162, 39, 0.2);
+    border-color: var(--ruto-brand);
+}
+
+.ruto-theme-track {
+    width: 2.5rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e8eef5 0%, var(--ruto-brand-soft) 100%);
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.ruto-theme-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ruto-brand), var(--ruto-brand-dark));
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ruto-theme-icon {
+    display: inline-flex;
+    color: var(--ruto-brand-dark);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.ruto-theme-icon--moon {
+    opacity: 0.45;
+}
+
+html[data-theme='dark'] .ruto-theme-icon--sun {
+    opacity: 0.45;
+}
+
+html[data-theme='dark'] .ruto-theme-icon--moon {
+    opacity: 1;
+}
+
+html[data-theme='dark'] .ruto-theme-thumb {
+    transform: translateX(1.15rem);
+}
+
+html[data-theme='dark'] .ruto-theme-track {
+    background: linear-gradient(90deg, #2a2418 0%, rgba(230, 162, 39, 0.35) 100%);
+}
+
+.ruto-content {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+/* Alerts */
+.ruto-alert {
+    padding: 0.85rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    animation: rutoFadeIn 0.35s ease;
+}
+
+.ruto-alert-success {
+    background: rgba(230, 162, 39, 0.12);
+    border: 1px solid rgba(230, 162, 39, 0.35);
+    color: var(--ruto-brand-dark);
+}
+
+.ruto-alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.ruto-alert-info {
+    background: var(--ruto-cream);
+    border: 1px solid rgba(230, 162, 39, 0.25);
+    color: var(--ruto-text-muted);
+}
+
+/* Page header */
+.ruto-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ruto-page-desc {
+    color: var(--ruto-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Cards */
+.ruto-card {
+    background: var(--ruto-white);
+    border: 1px solid rgba(230, 162, 39, 0.12);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 24px rgba(230, 162, 39, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ruto-card:hover {
+    box-shadow: 0 8px 32px rgba(230, 162, 39, 0.1);
+}
+
+.ruto-card-padded {
+    padding: 1.25rem;
+}
+
+.ruto-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ruto-text);
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--ruto-brand-soft);
+}
+
+/* Stat cards */
+.ruto-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .ruto-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .ruto-stat-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.ruto-stat-card {
+    background: var(--ruto-white);
+    border: 1px solid rgba(230, 162, 39, 0.15);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ruto-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ruto-brand), var(--ruto-brand-light));
+}
+
+.ruto-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(230, 162, 39, 0.15);
+}
+
+.ruto-stat-label {
+    font-size: 0.8rem;
+    color: var(--ruto-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ruto-stat-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--ruto-brand-dark);
+    margin-top: 0.35rem;
+    line-height: 1.2;
+}
+
+.ruto-stat-value.highlight {
+    color: var(--ruto-brand);
+}
+
+.ruto-stat-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.12;
+    color: var(--ruto-brand);
+}
+
+/* Buttons */
+.ruto-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 1.15rem;
+    background: linear-gradient(135deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ruto-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 162, 39, 0.4);
+    color: #fff;
+}
+
+.ruto-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.15rem;
+    background: var(--ruto-white);
+    color: var(--ruto-text-muted);
+    font-size: 0.875rem;
+    border: 1px solid rgba(230, 162, 39, 0.35);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.ruto-btn-secondary:hover {
+    border-color: var(--ruto-brand);
+    color: var(--ruto-brand-dark);
+}
+
+.ruto-btn-warning {
+    background: linear-gradient(135deg, #d97706, #b45309);
+}
+
+/* Table */
+.ruto-table-wrap {
+    overflow-x: auto;
+}
+
+.ruto-table {
+    width: 100%;
+    font-size: 0.875rem;
+    border-collapse: collapse;
+}
+
+.ruto-table thead {
+    background: var(--ruto-cream);
+}
+
+.ruto-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--ruto-brand-dark);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ruto-table th.text-right,
+.ruto-table td.text-right {
+    text-align: right;
+}
+
+.ruto-table td {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba(230, 162, 39, 0.08);
+}
+
+.ruto-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.ruto-table tbody tr:hover {
+    background: rgba(230, 162, 39, 0.04);
+}
+
+/* Links & badges */
+.ruto-link {
+    color: var(--ruto-brand-dark);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.ruto-link:hover {
+    color: var(--ruto-brand);
+    text-decoration: underline;
+}
+
+.ruto-link-danger {
+    color: #dc2626;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
+}
+
+.ruto-link-danger:hover {
+    text-decoration: underline;
+}
+
+.ruto-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.ruto-badge-success {
+    background: rgba(230, 162, 39, 0.15);
+    color: var(--ruto-brand-dark);
+}
+
+.ruto-badge-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.ruto-badge-muted {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+/* Form */
+.ruto-form-card {
+    max-width: 36rem;
+}
+
+.ruto-field {
+    margin-bottom: 1rem;
+}
+
+.ruto-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ruto-text);
+    margin-bottom: 0.35rem;
+}
+
+.ruto-input,
+.ruto-select,
+.ruto-textarea {
+    width: 100%;
+    border: 1px solid rgba(230, 162, 39, 0.35);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.9rem;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ruto-input:focus,
+.ruto-select:focus,
+.ruto-textarea:focus {
+    outline: none;
+    border-color: var(--ruto-brand);
+    box-shadow: 0 0 0 3px rgba(230, 162, 39, 0.2);
+}
+
+.ruto-field-error {
+    color: #dc2626;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* List items in dashboard cards */
+.ruto-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(230, 162, 39, 0.08);
+    font-size: 0.875rem;
+    transition: padding-left 0.2s ease;
+}
+
+.ruto-list-item:hover {
+    padding-left: 0.35rem;
+}
+
+.ruto-list-item:last-child {
+    border-bottom: none;
+}
+
+.ruto-empty {
+    color: var(--ruto-text-muted);
+    font-size: 0.875rem;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+/* Grid layouts */
+.ruto-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .ruto-grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Welcome banner on dashboard */
+.ruto-welcome-banner {
+    background: linear-gradient(135deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
+    color: #fff;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    animation: rutoFadeIn 0.5s ease;
+}
+
+.ruto-welcome-banner::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.ruto-welcome-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    margin: 0 0 0.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.ruto-welcome-banner p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── Dark mode ─── */
+html[data-theme='dark'] {
+    --ruto-white: #1a1814;
+    --ruto-warm: #12100d;
+    --ruto-cream: #1f1c17;
+    --ruto-text: #f0ebe3;
+    --ruto-text-muted: #a89f92;
+    --ruto-brand-soft: rgba(230, 162, 39, 0.2);
+}
+
+html[data-theme='dark'] .ruto-admin-body {
+    background:
+        radial-gradient(circle at 100% 0%, rgba(230, 162, 39, 0.08) 0%, transparent 40%),
+        linear-gradient(180deg, #0f0e0c 0%, #1a1814 100%);
+}
+
+html[data-theme='dark'] .ruto-sidebar {
+    background: rgba(26, 24, 20, 0.75);
+    border-color: rgba(230, 162, 39, 0.15);
+    box-shadow:
+        0 0 0 1px rgba(230, 162, 39, 0.08),
+        0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme='dark'] .ruto-sidebar-title {
+    color: var(--ruto-brand-light);
+}
+
+html[data-theme='dark'] .ruto-sidebar-logo-ring::after {
+    background: #1f1c17;
+}
+
+html[data-theme='dark'] .ruto-nav-item-icon {
+    background: rgba(30, 27, 22, 0.9);
+    border-color: rgba(230, 162, 39, 0.25);
+    color: var(--ruto-brand-light);
+}
+
+html[data-theme='dark'] .ruto-nav-item {
+    color: var(--ruto-text-muted);
+}
+
+html[data-theme='dark'] .ruto-nav-item:hover {
+    color: var(--ruto-text);
+}
+
+html[data-theme='dark'] .ruto-user-card {
+    background: linear-gradient(135deg, rgba(35, 32, 26, 0.95), rgba(26, 24, 20, 0.9));
+    border-color: rgba(230, 162, 39, 0.2);
+}
+
+html[data-theme='dark'] .ruto-main {
+    background: rgba(26, 24, 20, 0.55);
+    border-color: rgba(230, 162, 39, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme='dark'] .ruto-topbar {
+    background: rgba(26, 24, 20, 0.8);
+    border-bottom-color: rgba(230, 162, 39, 0.12);
+}
+
+html[data-theme='dark'] .ruto-breadcrumb-current {
+    color: var(--ruto-brand-light);
+    background: linear-gradient(135deg, rgba(230, 162, 39, 0.2), rgba(230, 162, 39, 0.06));
+    border-color: rgba(230, 162, 39, 0.3);
+}
+
+html[data-theme='dark'] .ruto-theme-toggle {
+    background: rgba(35, 32, 26, 0.95);
+    border-color: rgba(230, 162, 39, 0.35);
+}
+
+html[data-theme='dark'] .ruto-card,
+html[data-theme='dark'] .ruto-stat-card {
+    background: var(--ruto-cream);
+    border-color: rgba(230, 162, 39, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme='dark'] .ruto-card-title {
+    border-bottom-color: rgba(230, 162, 39, 0.2);
+}
+
+html[data-theme='dark'] .ruto-table thead {
+    background: rgba(230, 162, 39, 0.1);
+}
+
+html[data-theme='dark'] .ruto-table tbody tr:hover {
+    background: rgba(230, 162, 39, 0.06);
+}
+
+html[data-theme='dark'] .ruto-input,
+html[data-theme='dark'] .ruto-select,
+html[data-theme='dark'] .ruto-textarea {
+    background: #141210;
+    border-color: rgba(230, 162, 39, 0.3);
+    color: var(--ruto-text);
+}
+
+html[data-theme='dark'] .ruto-btn-secondary {
+    background: #1f1c17;
+    border-color: rgba(230, 162, 39, 0.35);
+    color: var(--ruto-text-muted);
+}
+
+html[data-theme='dark'] .ruto-welcome-banner::after {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme='dark'] .ruto-alert-success {
+    background: rgba(230, 162, 39, 0.15);
+    color: var(--ruto-brand-light);
+}
+
+html[data-theme='dark'] .ruto-alert-error {
+    background: rgba(127, 29, 29, 0.35);
+    border-color: rgba(248, 113, 113, 0.35);
+    color: #fecaca;
+}
+
+html[data-theme='dark'] .ruto-alert-info {
+    background: var(--ruto-cream);
+    color: var(--ruto-text-muted);
+}
+
+html[data-theme='dark'] .ruto-badge-muted {
+    background: #2a261f;
+    color: #a89f92;
+}
+
+html[data-theme='dark'] .ruto-list-item {
+    border-bottom-color: rgba(230, 162, 39, 0.1);
+}
+
+/* Mobile */
+@media (max-width: 1023px) {
+    .ruto-admin-shell {
+        flex-direction: column;
+        padding: 0.5rem;
+    }
+
+    .ruto-sidebar {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        position: relative;
+        top: 0;
+        margin-left: 0;
+        border-radius: 1rem;
+    }
+
+    .ruto-sidebar-nav {
+        max-height: 50vh;
+    }
+
+    .ruto-nav-item:hover,
+    .ruto-nav-item.is-active {
+        transform: none;
+    }
+
+    .ruto-main {
+        border-radius: 1rem;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .ruto-topbar {
+        border-radius: 1rem 1rem 0 0;
+    }
+}

@@ -1,5 +1,5 @@
 @props([
-    'class' => 'w-32 h-32',
+    'class' => 'w-40 h-40',
     'alt' => 'RUTO Coffee Shop',
 ])
 
