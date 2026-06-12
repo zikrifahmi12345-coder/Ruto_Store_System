@@ -2,9 +2,14 @@
 
 # Substitute PORT in nginx config
 export PORT=${PORT:-8080}
-envsubst '$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf
+echo "Before envsubst, PORT is: $PORT"
+if ! envsubst '$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf; then
+    echo "ERROR: envsubst failed"
+    exit 1
+fi
 mv /tmp/nginx.conf /etc/nginx/nginx.conf
-echo "PORT is: $PORT"
+echo "After envsubst, PORT is: $PORT"
+echo "Nginx listen config:"
 grep listen /etc/nginx/nginx.conf
 
 # Generate application key if not set
@@ -40,9 +45,5 @@ chown -R www-data:www-data /var/www/html/bootstrap/cache
 # Test php-fpm configuration
 echo "Testing php-fpm configuration..."
 php-fpm -t
-
-# Tail laravel log in background so it shows in Railway logs
-touch /var/www/html/storage/logs/laravel.log
-tail -f /var/www/html/storage/logs/laravel.log &
 
 echo "Application is ready!"
