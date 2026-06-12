@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 Route::prefix('pesan')->name('pesan.')->group(function () {
     Route::get('/', [PesananUserController::class, 'index'])->name('index');
+    Route::get('/menu', [PesananUserController::class, 'index'])->name('menu');
     Route::get('/cari', [PesananUserController::class, 'search'])->name('search');
     Route::post('/', [PesananUserController::class, 'store'])->name('store');
     Route::get('/sukses/{pesanan}', [PesananUserController::class, 'sukses'])->name('sukses');

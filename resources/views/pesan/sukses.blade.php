@@ -11,7 +11,7 @@
     <div class="rc-success-card">
         <div class="rc-success-icon">✓</div>
         <h2 class="rc-success-title">Pesanan Terkirim!</h2>
-        <p class="rc-success-sub">Tunjukkan kode ini ke kasir <strong>RUTO CAFFEE</strong> saat membayar.</p>
+        <p class="rc-success-sub">Tunjukkan kode ini ke kasir <strong>RUTO COFFEE</strong> saat membayar.</p>
 
         <div class="rc-success-ticket">
             <p class="rc-success-ticket-label">Kode Pesanan</p>

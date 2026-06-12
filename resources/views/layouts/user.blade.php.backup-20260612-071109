@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#e6a227">
-    <title>@yield('title', 'Pesan') — RUTO COFFEE</title>
+    <title>@yield('title', 'Pesan') — RUTO CAFFEE</title>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -247,22 +247,8 @@
         }
 
         .rc-hero-theme:hover {
-            background: var(--rc-border-subtle) !important;
-            color: var(--rc-text) !important;
-        }
-
-        .rc-hero-theme:active,
-        .rc-hero-theme:focus {
-            background: var(--rc-border-subtle) !important;
-            border: 1px solid var(--rc-border-subtle) !important;
-            color: var(--rc-text) !important;
-            outline: none !important;
-            box-shadow: none !important;
-        }
-
-        .rc-hero-theme:focus-visible {
-            outline: 2px solid rgba(230, 162, 39, 0.3) !important;
-            outline-offset: 2px !important;
+            background: var(--ruto-brand) !important;
+            color: #ffffff !important;
         }
         
         .rc-main {
@@ -1058,10 +1044,10 @@
             <div class="rc-hero-inner">
                 <a href="{{ route('pesan.index') }}" class="rc-hero-brand">
                     <div class="rc-hero-logo-ring">
-                        <x-ruto-logo class="rc-hero-logo" alt="RUTO COFFEE" />
+                        <x-ruto-logo class="rc-hero-logo" alt="RUTO CAFFEE" />
                     </div>
                     <div class="rc-hero-text">
-                        <h1 class="rc-hero-title">RUTO <span class="rc-hero-accent">COFFEE</span></h1>
+                        <h1 class="rc-hero-title">RUTO <span class="rc-hero-accent">CAFFEE</span></h1>
                         <p class="rc-hero-tagline">Pesan Online · Fresh &amp; Hangat</p>
                     </div>
                 </a>
@@ -1096,8 +1082,8 @@
                     <!-- Brand Section -->
                     <div class="rc-footer-col">
                         <div class="rc-footer-brand">
-                            <x-ruto-logo style="width: 45px; height: 45px; margin-bottom: 12px;" alt="RUTO COFFEE" />
-                            <h4 class="rc-footer-title">RUTO COFFEE</h4>
+                            <x-ruto-logo style="width: 45px; height: 45px; margin-bottom: 12px;" alt="RUTO CAFFEE" />
+                            <h4 class="rc-footer-title">RUTO CAFFEE</h4>
                             <p class="rc-footer-tagline">Coffee & Store</p>
                         </div>
                         <p class="rc-footer-desc">Nikmati pengalaman kopi premium dengan suasana hangat dan pelayanan terbaik.</p>
@@ -1161,7 +1147,7 @@
                 
                 <!-- Copyright -->
                 <div class="rc-footer-bottom">
-                    <p>&copy; {{ date('Y') }} RUTO COFFEE. All rights reserved.</p>
+                    <p>&copy; {{ date('Y') }} RUTO CAFFEE. All rights reserved.</p>
                 </div>
             </div>
         </footer>

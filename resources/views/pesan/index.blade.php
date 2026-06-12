@@ -46,97 +46,147 @@
         <div class="rc-layout-main">
             {{-- Beranda: meja + rekomendasi --}}
             <section x-show="tab === 'beranda'" x-transition class="rc-section">
-                <div class="rc-welcome-card" x-show="!nomorMeja.trim()">
-                    <p class="rc-welcome-emoji">☕</p>
-                    <h2 class="rc-welcome-title">Selamat datang!</h2>
-                    <p class="rc-welcome-desc">Masukkan nomor meja Anda, lalu pilih menu favorit.</p>
+                {{-- Hero Banner Slider (ala Contoh 1234) ─── --}}
+                <div class="contoh-hero-banner" x-data="{ 
+                    heroSlide: 0, 
+                    heroSlides: [
+                        {
+                            subtitle: 'Ruto Coffee & Store',
+                            title: 'Nikmati Aroma Kopi Premium',
+                            desc: ''
+                        },
+                        {
+                            subtitle: 'Ruto Coffee & Store',
+                            title: 'Tempat Nongkrong dengan Rasa Istimewa',
+                            desc: ''
+                        },
+                        {
+                            subtitle: 'Ruto Coffee & Store',
+                            title: 'Pesan Mudah, Nikmati Lebih Cepat',
+                            desc: ''
+                        }
+                    ],
+                    typewriterText: '',
+                    typewriterIndex: 0,
+                    isDeleting: false,
+                    typeSpeed: 80,
+                    deleteSpeed: 40,
+                    pauseTime: 2000
+                }" 
+                x-init="
+                    const typewriter = () => {
+                        const currentSlide = heroSlides[heroSlide];
+                        const fullText = currentSlide.title;
+                        
+                        if (!isDeleting) {
+                            if (typewriterIndex < fullText.length) {
+                                typewriterText = fullText.substring(0, typewriterIndex + 1);
+                                typewriterIndex++;
+                                setTimeout(typewriter, typeSpeed);
+                            } else {
+                                setTimeout(() => {
+                                    isDeleting = true;
+                                    typewriter();
+                                }, pauseTime);
+                            }
+                        } else {
+                            if (typewriterIndex > 0) {
+                                typewriterText = fullText.substring(0, typewriterIndex - 1);
+                                typewriterIndex--;
+                                setTimeout(typewriter, deleteSpeed);
+                            } else {
+                                isDeleting = false;
+                                heroSlide = (heroSlide + 1) % heroSlides.length;
+                                setTimeout(typewriter, 500);
+                            }
+                        }
+                    };
+                    typewriter();
+                ">
+                    
+                    <div class="contoh-hero-slides-container">
+                        <template x-for="(slide, index) in heroSlides" :key="index">
+                            <div x-show="heroSlide === index" 
+                                 x-transition:enter="transition-opacity ease-out duration-500"
+                                 x-transition:enter-start="opacity-0"
+                                 x-transition:enter-end="opacity-100"
+                                 x-transition:leave="transition-opacity ease-in duration-300"
+                                 x-transition:leave-start="opacity-100"
+                                 x-transition:leave-end="opacity-0"
+                                 class="contoh-hero-text-col">
+                                <span class="contoh-hero-subtitle" x-text="slide.subtitle"></span>
+                                <h1 class="contoh-hero-title">
+                                    <span x-text="typewriterText"></span>
+                                    <span class="typewriter-cursor">|</span>
+                                </h1>
+                                <p class="contoh-hero-desc" x-text="slide.desc"></p>
+                            </div>
+                        </template>
+                    </div>
                 </div>
 
-                <div class="rc-meja-block">
-                    <div class="rc-meja-input-card">
-                        <span class="rc-meja-input-icon" aria-hidden="true">🪑</span>
-                        <div class="rc-input-group rc-input-group--flush">
-                            <label class="rc-label" for="nomor-meja">Nomor meja</label>
-                            <input id="nomor-meja" type="text" x-model="nomorMeja" class="rc-input rc-input-lg"
-                                placeholder="Contoh: 12" inputmode="numeric" autocomplete="off"
-                                @keyup.enter="simpanMeja()">
+                <div class="rc-beranda-menu">
+                    <div class="rc-search-wrap">
+                        <svg class="rc-search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <input type="search" x-model="search" @input.debounce.300ms="filterProduk()"
+                            class="rc-input rc-search-input" placeholder="Cari menu...">
+                    </div>
+
+                    <div class="rc-menu-section rc-menu-section--populer" x-show="top10Populer.length > 0">
+                        <h2 class="rc-menu-heading">
+                            <span>🔥 Top 10 Menu Populer</span>
+                            <span class="rc-menu-count rc-menu-count--live" x-show="top10Populer.length > populerPerSlide">
+                                <span class="rc-live-dot" aria-hidden="true"></span>
+                                <span x-text="'Halaman ' + (populerSlideIndex + 1) + '/' + populerSlideCount"></span>
+                            </span>
+                        </h2>
+
+                        <div class="rc-populer-carousel"
+                            @mouseenter="populerPaused = true"
+                            @mouseleave="populerPaused = false"
+                            @touchstart.passive="populerPaused = true"
+                            @touchend.passive="populerPaused = false">
+                            <div class="rc-populer-viewport">
+                                <div class="rc-populer-slide"
+                                    :class="{
+                                        'is-fade-out': populerFade === 'out',
+                                        'is-fade-in': populerFade === 'in'
+                                    }"
+                                    x-show="populerSlideCurrent.length > 0">
+                                    <template x-for="(item, idx) in populerSlideCurrent" :key="'pop-'+populerSlideEpoch+'-'+item.id+'-'+idx">
+                                        @include('pesan.partials.menu-card-populer')
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="rc-populer-controls" x-show="populerSlideCount > 1">
+                                <button type="button" class="rc-populer-arrow" @click="prevPopulerSlide()" aria-label="Sebelumnya">‹</button>
+                                <div class="rc-populer-dots" role="tablist" aria-label="Halaman populer">
+                                    <template x-for="(off, i) in populerOffsets" :key="'dot-'+off">
+                                        <button type="button" class="rc-populer-dot"
+                                            :class="{ 'is-active': populerOffset === off }"
+                                            @click="goToPopulerSlide(i)"
+                                            :aria-label="'Halaman ' + (i + 1)"></button>
+                                    </template>
+                                </div>
+                                <button type="button" class="rc-populer-arrow" @click="nextPopulerSlide()" aria-label="Berikutnya">›</button>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" @click="simpanMeja()" class="rc-btn rc-btn-primary rc-btn-block">
-                        Simpan &amp; Lanjut
-                    </button>
+
+                    <div class="rc-menu-section rc-menu-section--all">
+                        <h2 class="rc-menu-heading">
+                            <span>Semua Menu</span>
+                            <span class="rc-menu-count" x-text="produkFiltered.length + ' item'"></span>
+                        </h2>
+                        <div class="rc-menu-grid rc-menu-grid--static">
+                            <template x-for="item in produkFiltered" :key="item.id">
+                                @include('pesan.partials.menu-card')
+                            </template>
+                        </div>
+                        <p x-show="produkFiltered.length === 0" class="rc-empty">Menu tidak ditemukan.</p>
+                    </div>
                 </div>
-
-                <template x-if="nomorMeja.trim()">
-                    <div class="rc-beranda-menu">
-                        <div class="rc-meja-badge">
-                            <span class="rc-meja-badge-dot"></span>
-                            <span x-text="labelMeja"></span>
-                            <button type="button" @click="nomorMeja = ''" class="rc-meja-badge-edit">Ubah</button>
-                        </div>
-
-                        <div class="rc-search-wrap">
-                            <svg class="rc-search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                            <input type="search" x-model="search" @input.debounce.300ms="filterProduk()"
-                                class="rc-input rc-search-input" placeholder="Cari menu...">
-                        </div>
-
-                        <div class="rc-menu-section rc-menu-section--populer" x-show="top10Populer.length > 0">
-                            <h2 class="rc-menu-heading">
-                                <span>🔥 Top 10 Menu Populer</span>
-                                <span class="rc-menu-count rc-menu-count--live" x-show="top10Populer.length > populerPerSlide">
-                                    <span class="rc-live-dot" aria-hidden="true"></span>
-                                    <span x-text="'Halaman ' + (populerSlideIndex + 1) + '/' + populerSlideCount"></span>
-                                </span>
-                            </h2>
-
-                            <div class="rc-populer-carousel"
-                                @mouseenter="populerPaused = true"
-                                @mouseleave="populerPaused = false"
-                                @touchstart.passive="populerPaused = true"
-                                @touchend.passive="populerPaused = false">
-                                <div class="rc-populer-viewport">
-                                    <div class="rc-populer-slide"
-                                        :class="{
-                                            'is-fade-out': populerFade === 'out',
-                                            'is-fade-in': populerFade === 'in'
-                                        }"
-                                        x-show="populerSlideCurrent.length > 0">
-                                        <template x-for="(item, idx) in populerSlideCurrent" :key="'pop-'+populerSlideEpoch+'-'+item.id+'-'+idx">
-                                            @include('pesan.partials.menu-card-populer')
-                                        </template>
-                                    </div>
-                                </div>
-
-                                <div class="rc-populer-controls" x-show="populerSlideCount > 1">
-                                    <button type="button" class="rc-populer-arrow" @click="prevPopulerSlide()" aria-label="Sebelumnya">‹</button>
-                                    <div class="rc-populer-dots" role="tablist" aria-label="Halaman populer">
-                                        <template x-for="(off, i) in populerOffsets" :key="'dot-'+off">
-                                            <button type="button" class="rc-populer-dot"
-                                                :class="{ 'is-active': populerOffset === off }"
-                                                @click="goToPopulerSlide(i)"
-                                                :aria-label="'Halaman ' + (i + 1)"></button>
-                                        </template>
-                                    </div>
-                                    <button type="button" class="rc-populer-arrow" @click="nextPopulerSlide()" aria-label="Berikutnya">›</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rc-menu-section rc-menu-section--all">
-                            <h2 class="rc-menu-heading">
-                                <span>Semua Menu</span>
-                                <span class="rc-menu-count" x-text="produkFiltered.length + ' item'"></span>
-                            </h2>
-                            <div class="rc-menu-grid rc-menu-grid--static">
-                                <template x-for="item in produkFiltered" :key="item.id">
-                                    @include('pesan.partials.menu-card')
-                                </template>
-                            </div>
-                            <p x-show="produkFiltered.length === 0" class="rc-empty">Menu tidak ditemukan.</p>
-                        </div>
-                    </div>
-                </template>
             </section>
 
             {{-- Favorit: like + trafik --}}
@@ -146,19 +196,13 @@
                     <p class="rc-page-desc">Berdasarkan ❤️ Anda &amp; trafik pembelian di toko</p>
                 </div>
 
-                <p x-show="!nomorMeja.trim()" class="rc-hint-box">
-                    Isi nomor meja di tab <button type="button" class="rc-link-btn" @click="pilihTab('beranda')">Beranda</button> dulu.
+                <p x-show="favoritList.length === 0" class="rc-empty">
+                    Belum ada favorit. Tekan ❤️ pada menu atau tunggu data penjualan terkumpul.
                 </p>
-
-                <div x-show="nomorMeja.trim()">
-                    <p x-show="favoritList.length === 0" class="rc-empty">
-                        Belum ada favorit. Tekan ❤️ pada menu atau tunggu data penjualan terkumpul.
-                    </p>
-                    <div class="rc-menu-grid" x-show="favoritList.length > 0">
-                        <template x-for="item in favoritList" :key="'fav-'+item.id">
-                            @include('pesan.partials.menu-card')
-                        </template>
-                    </div>
+                <div class="rc-menu-grid" x-show="favoritList.length > 0">
+                    <template x-for="item in favoritList" :key="'fav-'+item.id">
+                        @include('pesan.partials.menu-card')
+                    </template>
                 </div>
             </section>
 
@@ -169,44 +213,50 @@
                     <p class="rc-page-desc">Pilih kategori untuk melihat menu</p>
                 </div>
 
-                <p x-show="!nomorMeja.trim()" class="rc-hint-box">
-                    Isi nomor meja di tab <button type="button" class="rc-link-btn" @click="pilihTab('beranda')">Beranda</button> dulu.
-                </p>
-
-                <div x-show="nomorMeja.trim()">
-                    <div class="rc-cat-grid">
-                        <button type="button" @click="kategoriAktif = 'semua'; filterProduk()"
-                            class="rc-cat-tile" :class="{ 'is-active': kategoriAktif === 'semua' }">
-                            <span class="rc-cat-tile-icon">🍽️</span>
-                            <span>Semua</span>
+                <div class="rc-cat-grid">
+                    <button type="button" @click="kategoriAktif = 'semua'; filterProduk()"
+                        class="rc-cat-tile" :class="{ 'is-active': kategoriAktif === 'semua' }">
+                        <span class="rc-cat-tile-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                                <path d="M7 2v20"/>
+                                <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+                            </svg>
+                        </span>
+                        <span>Semua</span>
+                    </button>
+                    <template x-for="kat in kategoriList" :key="kat.id">
+                        <button type="button" @click="kategoriAktif = String(kat.id); filterProduk()"
+                            class="rc-cat-tile" :class="{ 'is-active': kategoriAktif === String(kat.id) }">
+                            <span class="rc-cat-tile-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                                    <path d="M7 2v20"/>
+                                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+                                </svg>
+                            </span>
+                            <span x-text="kat.nama_kategori"></span>
                         </button>
-                        <template x-for="kat in kategoriList" :key="kat.id">
-                            <button type="button" @click="kategoriAktif = String(kat.id); filterProduk()"
-                                class="rc-cat-tile" :class="{ 'is-active': kategoriAktif === String(kat.id) }">
-                                <span class="rc-cat-tile-icon">☕</span>
-                                <span x-text="kat.nama_kategori"></span>
-                            </button>
-                        </template>
-                    </div>
-
-                    <div class="rc-search-wrap rc-search-wrap--sm">
-                        <svg class="rc-search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                        <input type="search" x-model="search" @input.debounce.300ms="filterProduk()"
-                            class="rc-input rc-search-input" placeholder="Cari dalam kategori...">
-                    </div>
-
-                    <h3 class="rc-menu-heading rc-menu-heading--sm">
-                        <span x-text="kategoriAktif === 'semua' ? 'Semua Menu' : namaKategoriAktif"></span>
-                        <span class="rc-menu-count" x-text="produkFiltered.length + ' item'"></span>
-                    </h3>
-
-                    <div class="rc-menu-grid">
-                        <template x-for="item in produkFiltered" :key="'kat-'+item.id">
-                            @include('pesan.partials.menu-card')
-                        </template>
-                    </div>
-                    <p x-show="produkFiltered.length === 0" class="rc-empty">Tidak ada menu di kategori ini.</p>
+                    </template>
                 </div>
+
+                <div class="rc-search-wrap rc-search-wrap--sm">
+                    <svg class="rc-search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="search" x-model="search" @input.debounce.300ms="filterProduk()"
+                        class="rc-input rc-search-input" placeholder="Cari dalam kategori...">
+                </div>
+
+                <h3 class="rc-menu-heading rc-menu-heading--sm">
+                    <span x-text="kategoriAktif === 'semua' ? 'Semua Menu' : namaKategoriAktif"></span>
+                    <span class="rc-menu-count" x-text="produkFiltered.length + ' item'"></span>
+                </h3>
+
+                <div class="rc-menu-grid">
+                    <template x-for="item in produkFiltered" :key="'kat-'+item.id">
+                        @include('pesan.partials.menu-card')
+                    </template>
+                </div>
+                <p x-show="produkFiltered.length === 0" class="rc-empty">Tidak ada menu di kategori ini.</p>
             </section>
         </div>
 
@@ -308,10 +358,6 @@
                     this.likes = [];
                 }
                 this.$watch('kategoriAktif', () => this.filterProduk());
-                const mq = window.matchMedia('(min-width: 1024px)');
-                const syncCart = () => { this.cartOpen = mq.matches; };
-                syncCart();
-                mq.addEventListener('change', syncCart);
                 this.syncPopulerPerSlide();
                 this.populerSlideCurrent = this.itemsAtOffset(this.populerOffset);
                 window.addEventListener('resize', () => this.syncPopulerPerSlide());
@@ -406,21 +452,12 @@
 
             pilihTab(name) {
                 if (name === 'keranjang') {
-                    if (!this.nomorMeja.trim()) {
-                        this.showToast('Isi nomor meja di Beranda dulu');
-                        this.tab = 'beranda';
-                        return;
-                    }
                     this.tab = 'keranjang';
                     this.cartOpen = true;
                     return;
                 }
                 this.tab = name;
-                if (window.innerWidth >= 1024) {
-                    this.cartOpen = true;
-                } else {
-                    this.cartOpen = false;
-                }
+                this.cartOpen = false;
             },
 
             simpanMeja() {
@@ -501,11 +538,6 @@
             },
 
             tambahKeKeranjang(produk) {
-                if (!this.nomorMeja.trim()) {
-                    this.showToast('Isi nomor meja di Beranda dulu');
-                    this.tab = 'beranda';
-                    return;
-                }
                 const existing = this.cart.find(c => c.produk_id === produk.id);
                 const prevQty = existing ? existing.qty : 0;
 
@@ -557,6 +589,11 @@
             },
 
             prepareSubmit(e) {
+                if (!this.nomorMeja.trim()) {
+                    e.preventDefault();
+                    this.showToast('Silakan isi nomor meja Anda terlebih dahulu');
+                    return;
+                }
                 if (this.cart.length === 0) {
                     e.preventDefault();
                     this.showToast('Keranjang masih kosong');

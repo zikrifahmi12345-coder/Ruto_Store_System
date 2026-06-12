@@ -1,8 +1,21 @@
 /* ═══════════════════════════════════════════
-   RUTO CAFFEE — Customer ordering UI
+   RUTO COFFEE — Customer ordering UI
    ═══════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* Admin color scheme variables */
+:root {
+    --ruto-brand: #e6a227;
+    --ruto-brand-dark: #c4881a;
+    --ruto-brand-light: #f5d998;
+    --ruto-white: #ffffff;
+    --ruto-warm: #fffbf5;
+    --ruto-cream: #fff9f0;
+    --ruto-text: #2e2e2e;
+    --ruto-text-muted: #6b6560;
+    --ruto-dark-bg: #222831;
+}
 
 /* Animasi variabel warna — semua elemen pakai var() berubah serentak */
 @property --rc-bg {
@@ -78,25 +91,31 @@
 }
 
 :root {
-    --rc-bg: #faf6f0;
+    --rc-bg: #f5ebe0;
     --rc-bg-deep: #1a1510;
-    --rc-surface: #ffffff;
+    --rc-surface: #faf9f6;
     --rc-gold: #c4881a;
     --rc-gold-light: #e6a227;
     --rc-gold-soft: rgba(230, 162, 39, 0.18);
-    --rc-text: #2a2218;
-    --rc-muted: #7a6f63;
+    --rc-text: #3d3428;
+    --rc-muted: #8b7e6f;
     --rc-nav-h: 4.25rem;
     --rc-radius: 1rem;
     --rc-border-subtle: rgba(230, 162, 39, 0.18);
-    --rc-shadow-color: rgba(42, 34, 24, 0.12);
+    --rc-shadow-color: rgba(61, 52, 40, 0.08);
     --rc-shadow: 0 12px 40px var(--rc-shadow-color);
     --rc-cart-shadow: 0 -12px 48px var(--rc-shadow-color);
-    --rc-theme-duration: 0.42s;
+    --rc-theme-duration: 0.18s;
     --rc-theme-ease: cubic-bezier(0.4, 0, 0.2, 1);
     --rc-theme-transition: var(--rc-theme-duration) var(--rc-theme-ease);
-    --rc-hero-title: #2a2218;
-    --rc-hero-tagline: rgba(42, 34, 24, 0.72);
+
+    /* Force synchronous transitions for all theme-related properties */
+    transition: background-color var(--rc-theme-duration) var(--rc-theme-ease),
+                color var(--rc-theme-duration) var(--rc-theme-ease),
+                border-color var(--rc-theme-duration) var(--rc-theme-ease),
+                box-shadow var(--rc-theme-duration) var(--rc-theme-ease) !important;
+    --rc-hero-title: #3d3428;
+    --rc-hero-tagline: rgba(61, 52, 40, 0.72);
     --rc-hero-logo-ring-bg: rgba(255, 255, 255, 0.75);
     --rc-hero-logo-ring-border: rgba(196, 136, 26, 0.55);
     --rc-hero-theme-bg: rgba(255, 255, 255, 0.55);
@@ -117,6 +136,80 @@ html {
         --rc-hero-logo-ring-bg var(--rc-theme-transition),
         --rc-hero-logo-ring-border var(--rc-theme-transition),
         --rc-hero-theme-bg var(--rc-theme-transition);
+}
+
+/* Batik Pattern for body element */
+body {
+    background-color: transparent !important;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    opacity: 0.06;
+    background-color: var(--rc-bg);
+    background-image: 
+        radial-gradient(circle at 20% 30%, var(--rc-text) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 60% 70%, var(--rc-text) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 80% 10%, var(--rc-text) 1.8px, transparent 1.8px),
+        radial-gradient(circle at 40% 90%, var(--rc-text) 1.8px, transparent 1.8px),
+        radial-gradient(circle at 10% 60%, var(--rc-text) 1.5px, transparent 1.5px),
+        radial-gradient(circle at 90% 40%, var(--rc-text) 1.5px, transparent 1.5px);
+    background-size: 50px 50px, 70px 70px, 90px 90px, 80px 80px, 60px 60px, 75px 75px;
+    background-position: 0 0, 25px 35px, 40px 15px, 10px 50px, 20px 25px, 50px 45px;
+    transition: opacity var(--rc-theme-transition), background-color var(--rc-theme-transition);
+}
+
+html[data-theme='dark'] body::before {
+    opacity: 0.10;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.05;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4a574' stroke-width='2.0' opacity='1'%3E%3C!-- Coffee Cup --%3E%3Cpath d='M42 54 L42 74 Q42 79 47 79 L67 79 Q72 79 72 74 L72 54 Z' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M39 54 L75 54' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M72 61 L79 61 Q82 61 82 64 L82 69 Q82 72 79 72 L72 72' stroke-linejoin='round'/%3E%3C!-- Steam --%3E%3Cpath d='M49 47 Q50 42 49 37' stroke-linecap='round' opacity='0.7'/%3E%3Cpath d='M57 47 Q58 42 57 37' stroke-linecap='round' opacity='0.7'/%3E%3Cpath d='M65 47 Q66 42 65 37' stroke-linecap='round' opacity='0.7'/%3E%3C!-- Coffee Beans --%3E%3Cellipse cx='24' cy='24' rx='5' ry='7' transform='rotate(45 24 24)' fill='%23d4a574' opacity='0.5'/%3E%3Cpath d='M24 21 Q24 24 24 27' stroke='%23fff' stroke-width='1.2' opacity='0.8'/%3E%3Cellipse cx='96' cy='96' rx='5' ry='7' transform='rotate(-30 96 96)' fill='%23d4a574' opacity='0.5'/%3E%3Cpath d='M96 93 Q96 96 96 99' stroke='%23fff' stroke-width='1.2' opacity='0.8'/%3E%3C!-- Decorative Dots --%3E%3Ccircle cx='18' cy='102' r='2' fill='%23d4a574' opacity='0.6'/%3E%3Ccircle cx='102' cy='18' r='2' fill='%23d4a574' opacity='0.6'/%3E%3Ccircle cx='12' cy='60' r='1.5' fill='%23d4a574' opacity='0.5'/%3E%3Ccircle cx='108' cy='60' r='1.5' fill='%23d4a574' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    background-position: 0 0;
+    transition: opacity var(--rc-theme-transition), filter var(--rc-theme-transition);
+}
+
+html[data-theme='dark'] body::after {
+    opacity: 0.08;
+    filter: brightness(1.5) contrast(1.1);
+}
+
+/* Universal synchronous transitions for all themed elements */
+:root *,
+:root *::before,
+:root *::after {
+    transition-property: background-color, color, border-color, box-shadow, fill, stroke !important;
+    transition-duration: 0.18s !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Preserve specific transitions for animations (not theme-related) */
+:root [style*="transform"],
+:root .rc-hero,
+:root .rc-hero-brand,
+:root .rc-hero-theme,
+:root .rc-menu-card,
+:root .rc-top-tab,
+:root .ruto-theme-toggle {
+    transition-property: background-color, color, border-color, box-shadow, fill, stroke, transform !important;
+    transition-duration: 0.18s, 0.18s, 0.18s, 0.18s, 0.18s, 0.18s, 0.35s !important;
 }
 
 html[data-theme='dark'] {
@@ -140,10 +233,60 @@ html[data-theme='dark'] {
 /* ─── Shell ─── */
 .rc-body {
     font-family: 'Outfit', sans-serif;
-    background-color: var(--rc-bg);
+    background-color: transparent !important;
     color: var(--rc-text);
     min-height: 100dvh;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
+}
+
+/* Batik Pattern Layer 1 - Dot Pattern */
+.rc-body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    opacity: 0;
+    background-color: var(--rc-bg);
+    background-image: 
+        radial-gradient(circle at 20% 30%, var(--rc-text) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 60% 70%, var(--rc-text) 2.5px, transparent 2.5px),
+        radial-gradient(circle at 80% 10%, var(--rc-text) 1.8px, transparent 1.8px),
+        radial-gradient(circle at 40% 90%, var(--rc-text) 1.8px, transparent 1.8px),
+        radial-gradient(circle at 10% 60%, var(--rc-text) 1.5px, transparent 1.5px),
+        radial-gradient(circle at 90% 40%, var(--rc-text) 1.5px, transparent 1.5px);
+    background-size: 50px 50px, 70px 70px, 90px 90px, 80px 80px, 60px 60px, 75px 75px;
+    background-position: 0 0, 25px 35px, 40px 15px, 10px 50px, 20px 25px, 50px 45px;
+    transition: opacity var(--rc-theme-transition), background-color var(--rc-theme-transition);
+}
+
+html[data-theme='dark'] .rc-body::before {
+    opacity: 0.10;
+}
+
+/* Batik Pattern Layer 2 - Coffee Cup & Ornament SVG */
+.rc-body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4a574' stroke-width='2.0' opacity='1'%3E%3C!-- Coffee Cup --%3E%3Cpath d='M42 54 L42 74 Q42 79 47 79 L67 79 Q72 79 72 74 L72 54 Z' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M39 54 L75 54' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M72 61 L79 61 Q82 61 82 64 L82 69 Q82 72 79 72 L72 72' stroke-linejoin='round'/%3E%3C!-- Steam --%3E%3Cpath d='M49 47 Q50 42 49 37' stroke-linecap='round' opacity='0.7'/%3E%3Cpath d='M57 47 Q58 42 57 37' stroke-linecap='round' opacity='0.7'/%3E%3Cpath d='M65 47 Q66 42 65 37' stroke-linecap='round' opacity='0.7'/%3E%3C!-- Coffee Beans --%3E%3Cellipse cx='24' cy='24' rx='5' ry='7' transform='rotate(45 24 24)' fill='%23d4a574' opacity='0.5'/%3E%3Cpath d='M24 21 Q24 24 24 27' stroke='%23fff' stroke-width='1.2' opacity='0.8'/%3E%3Cellipse cx='96' cy='96' rx='5' ry='7' transform='rotate(-30 96 96)' fill='%23d4a574' opacity='0.5'/%3E%3Cpath d='M96 93 Q96 96 96 99' stroke='%23fff' stroke-width='1.2' opacity='0.8'/%3E%3C!-- Decorative Dots --%3E%3Ccircle cx='18' cy='102' r='2' fill='%23d4a574' opacity='0.6'/%3E%3Ccircle cx='102' cy='18' r='2' fill='%23d4a574' opacity='0.6'/%3E%3Ccircle cx='12' cy='60' r='1.5' fill='%23d4a574' opacity='0.5'/%3E%3Ccircle cx='108' cy='60' r='1.5' fill='%23d4a574' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    background-position: 0 0;
+    transition: opacity var(--rc-theme-transition), filter var(--rc-theme-transition);
+}
+
+html[data-theme='dark'] .rc-body::after {
+    opacity: 0.08;
+    filter: brightness(1.5) contrast(1.1);
 }
 
 .rc-shell {
@@ -155,7 +298,7 @@ html[data-theme='dark'] {
 }
 
 .rc-main {
-    padding: 0 clamp(0.75rem, 3vw, 1.5rem) 1.5rem;
+    padding: 0;
 }
 
 /* ─── Hero ─── */
@@ -268,6 +411,23 @@ html[data-theme='dark'] .rc-hero-bg::after {
     background-color: var(--rc-hero-theme-bg) !important;
 }
 
+.rc-hero-theme:hover {
+    background-color: var(--rc-hero-theme-bg) !important;
+}
+
+.rc-hero-theme:active,
+.rc-hero-theme:focus {
+    background-color: var(--rc-hero-theme-bg) !important;
+    border-color: rgba(230, 162, 39, 0.45) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.rc-hero-theme:focus-visible {
+    outline: 2px solid rgba(230, 162, 39, 0.3) !important;
+    outline-offset: 2px !important;
+}
+
 /* ─── App layout ─── */
 .rc-app {
     position: relative;
@@ -275,6 +435,9 @@ html[data-theme='dark'] .rc-hero-bg::after {
 
 .rc-section {
     animation: rcFadeUp 0.45s ease;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
 }
 
 @keyframes rcFadeUp {
@@ -285,11 +448,12 @@ html[data-theme='dark'] .rc-hero-bg::after {
 /* ─── Welcome / Meja ─── */
 .rc-welcome-card {
     text-align: center;
-    padding: 1.5rem 1rem;
-    margin-bottom: 1.25rem;
-    border-radius: var(--rc-radius);
-    background: linear-gradient(135deg, var(--rc-gold-soft), transparent);
-    border: 1px solid rgba(230, 162, 39, 0.2);
+    padding: 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(230, 162, 39, 0.15), rgba(230, 162, 39, 0.05));
+    border: 2px solid rgba(230, 162, 39, 0.25);
+    box-shadow: 0 4px 20px rgba(230, 162, 39, 0.1);
 }
 
 .rc-welcome-emoji {
@@ -332,9 +496,15 @@ html[data-theme='dark'] .rc-hero-bg::after {
     gap: 0.5rem;
     padding: 1.25rem 0.75rem;
     border: 2px solid rgba(230, 162, 39, 0.2);
-    border-radius: var(--rc-radius);
+    border-radius: 15px;
     background-color: var(--rc-surface);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rc-identitas-card:hover {
+    border-color: rgba(230, 162, 39, 0.4);
+    transform: translateY(-2px);
 }
 
 .rc-identitas-card:active {
@@ -342,8 +512,8 @@ html[data-theme='dark'] .rc-hero-bg::after {
 }
 
 .rc-identitas-card.is-active {
-    border-color: var(--rc-gold);
-    background: var(--rc-gold-soft);
+    border-color: var(--ruto-brand);
+    background: rgba(230, 162, 39, 0.15);
     box-shadow: 0 8px 24px rgba(196, 136, 26, 0.2);
 }
 
@@ -373,20 +543,21 @@ html[data-theme='dark'] .rc-hero-bg::after {
 .rc-input,
 .rc-textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid rgba(230, 162, 39, 0.25);
-    border-radius: 0.65rem;
+    padding: 0.85rem 1.15rem;
+    border: 2px solid rgba(230, 162, 39, 0.25);
+    border-radius: 10px;
     background-color: var(--rc-surface);
     color: var(--rc-text);
     font-size: 1rem;
     font-family: inherit;
+    transition: all 0.3s ease;
 }
 
 .rc-input:focus,
 .rc-textarea:focus {
     outline: none;
-    border-color: var(--rc-gold);
-    box-shadow: 0 0 0 3px var(--rc-gold-soft);
+    border-color: var(--ruto-brand);
+    box-shadow: 0 0 0 4px rgba(230, 162, 39, 0.15);
 }
 
 .rc-input-lg {
@@ -420,9 +591,16 @@ html[data-theme='dark'] .rc-hero-bg::after {
 }
 
 .rc-btn-primary {
-    background: linear-gradient(135deg, var(--rc-gold-light), var(--rc-gold));
+    background: linear-gradient(135deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
     color: #fff;
     box-shadow: 0 6px 20px rgba(196, 136, 26, 0.35);
+    border-radius: 45px;
+    transition: all 0.3s ease;
+}
+
+.rc-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(196, 136, 26, 0.45);
 }
 
 .rc-btn-secondary {
@@ -440,14 +618,14 @@ html[data-theme='dark'] .rc-hero-bg::after {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.45rem 0.85rem;
+    padding: 0.5rem 1rem;
     margin-bottom: 1rem;
     border-radius: 999px;
-    background: var(--rc-gold-soft);
-    border: 1px solid rgba(230, 162, 39, 0.35);
+    background: rgba(230, 162, 39, 0.15);
+    border: 2px solid rgba(230, 162, 39, 0.35);
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
 }
 
 .rc-meja-badge-dot {
@@ -524,7 +702,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 }
 
 .rc-cat-chip.is-active {
-    background: linear-gradient(135deg, var(--rc-gold-light), var(--rc-gold));
+    background: linear-gradient(135deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
     color: #fff;
     border-color: transparent;
     box-shadow: 0 4px 12px rgba(196, 136, 26, 0.3);
@@ -544,6 +722,10 @@ html[data-theme='dark'] .rc-hero-bg::after {
     font-size: 1.35rem;
     font-weight: 700;
     color: var(--rc-text);
+}
+
+.rc-menu-heading span:first-child {
+    color: var(--ruto-brand-dark);
 }
 
 .rc-menu-count {
@@ -580,12 +762,18 @@ html[data-theme='dark'] .rc-hero-bg::after {
     flex: 0 0 9.5rem;
     width: 9.5rem;
     scroll-snap-align: start;
-    border-radius: var(--rc-radius);
+    border-radius: 0;
     background-color: var(--rc-surface);
-    border: 1px solid var(--rc-border-subtle);
+    border: none;
     overflow: hidden;
     cursor: pointer;
-    box-shadow: var(--rc-shadow);
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+.rc-menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(230, 162, 39, 0.2);
 }
 
 .rc-menu-card:active {
@@ -593,15 +781,16 @@ html[data-theme='dark'] .rc-hero-bg::after {
 }
 
 .rc-menu-card--in-cart {
-    border-color: var(--rc-gold);
+    border-color: var(--ruto-brand);
     box-shadow: 0 8px 28px rgba(196, 136, 26, 0.25);
 }
 
 .rc-menu-card-img {
     position: relative;
     aspect-ratio: 1;
-    background: linear-gradient(145deg, var(--rc-gold-soft), transparent);
+    background: linear-gradient(145deg, rgba(230, 162, 39, 0.1), transparent);
     overflow: hidden;
+    border-radius: 0;
 }
 
 .rc-menu-card-img img {
@@ -633,7 +822,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
     height: 1.35rem;
     padding: 0 0.35rem;
     border-radius: 999px;
-    background: var(--rc-gold);
+    background: var(--ruto-brand);
     color: #fff;
     font-size: 0.7rem;
     font-weight: 700;
@@ -683,21 +872,27 @@ html[data-theme='dark'] .rc-hero-bg::after {
 .rc-menu-card-price {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
 }
 
 .rc-menu-card-add {
     width: 1.35rem;
     height: 1.35rem;
     border-radius: 50%;
-    background: var(--rc-gold-soft);
-    color: var(--rc-gold);
+    background: rgba(230, 162, 39, 0.15);
+    color: var(--ruto-brand-dark);
     font-size: 1rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
+    transition: all 0.3s ease;
+}
+
+.rc-menu-card-add:hover {
+    background: var(--ruto-brand);
+    color: #fff;
 }
 
 .rc-empty {
@@ -829,13 +1024,19 @@ html[data-theme='dark'] .rc-hero-bg::after {
 .rc-qty-btn {
     width: 2rem;
     height: 2rem;
-    border: 1px solid var(--rc-border-subtle);
-    border-radius: 0.4rem;
+    border: 2px solid rgba(230, 162, 39, 0.25);
+    border-radius: 8px;
     background-color: var(--rc-surface);
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
     font-size: 1.1rem;
     cursor: pointer;
     line-height: 1;
+    transition: all 0.3s ease;
+}
+
+.rc-qty-btn:hover {
+    background: rgba(230, 162, 39, 0.15);
+    border-color: var(--ruto-brand);
 }
 
 .rc-cart-drawer-footer {
@@ -853,7 +1054,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 
 .rc-cart-total strong {
     font-size: 1.25rem;
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
 }
 
 .rc-cart-hint {
@@ -876,6 +1077,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
     position: sticky;
     top: 0;
     z-index: 25;
+    overflow: visible !important;
 }
 
 .rc-top-tab {
@@ -895,6 +1097,8 @@ html[data-theme='dark'] .rc-hero-bg::after {
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
+    position: relative;
+    overflow: visible !important;
 }
 
 .rc-top-tab span:not(.rc-nav-badge) {
@@ -905,7 +1109,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 }
 
 .rc-top-tab.is-active {
-    background: linear-gradient(135deg, var(--rc-gold-light), var(--rc-gold));
+    background: linear-gradient(135deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
     color: #fff;
     box-shadow: 0 4px 14px rgba(196, 136, 26, 0.3);
 }
@@ -913,28 +1117,35 @@ html[data-theme='dark'] .rc-hero-bg::after {
 .rc-top-cart-wrap {
     position: relative;
     display: flex;
+    overflow: visible !important;
 }
 
 .rc-nav-badge {
     position: absolute;
-    top: -5px;
-    right: -8px;
-    min-width: 1rem;
-    height: 1rem;
-    padding: 0 0.2rem;
+    top: -8px;
+    right: -12px;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    padding: 0 0.35rem;
     border-radius: 999px;
     background: #dc2626;
     color: #fff;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.5), 0 0 0 2px #fff;
+    border: 2px solid #fff;
 }
 
 .rc-top-tab.is-active .rc-nav-badge {
-    background: #fff;
-    color: var(--rc-gold);
+    background: #ffbe33;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(255, 190, 51, 0.5), 0 0 0 2px var(--rc-surface);
+    border-color: var(--rc-surface);
 }
 
 /* ─── Layout utama + keranjang ─── */
@@ -996,7 +1207,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
     font-size: 0.72rem;
 }
 
@@ -1092,7 +1303,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 }
 
 .rc-populer-arrow:hover {
-    background: var(--rc-gold-soft);
+    background: rgba(230, 162, 39, 0.15);
 }
 
 .rc-populer-dots {
@@ -1114,7 +1325,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 
 .rc-populer-dot.is-active {
     width: 1.25rem;
-    background: var(--rc-gold);
+    background: var(--ruto-brand);
 }
 
 .rc-menu-card--populer {
@@ -1125,6 +1336,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 
 .rc-menu-card--populer .rc-menu-card-img {
     aspect-ratio: 4 / 3;
+    background: linear-gradient(145deg, rgba(230, 162, 39, 0.1), transparent);
 }
 
 .rc-menu-card--populer .rc-menu-card-body--compact {
@@ -1141,7 +1353,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 .rc-menu-card--populer .rc-menu-card-price {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
 }
 
 .rc-populer-badge {
@@ -1155,7 +1367,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    background: linear-gradient(135deg, var(--rc-gold-light), var(--rc-gold));
+    background: linear-gradient(135deg, var(--ruto-brand) 0%, var(--ruto-brand-dark) 100%);
     color: #fff;
     box-shadow: 0 2px 8px rgba(196, 136, 26, 0.35);
 }
@@ -1222,6 +1434,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 0.25rem;
+    color: var(--ruto-brand-dark);
 }
 
 .rc-page-desc {
@@ -1232,8 +1445,9 @@ html[data-theme='dark'] .rc-hero-bg::after {
 
 .rc-hint-box {
     padding: 1rem;
-    border-radius: var(--rc-radius);
-    background: var(--rc-gold-soft);
+    border-radius: 15px;
+    background: rgba(230, 162, 39, 0.1);
+    border: 2px solid rgba(230, 162, 39, 0.2);
     font-size: 0.875rem;
     color: var(--rc-text);
     text-align: center;
@@ -1242,7 +1456,7 @@ html[data-theme='dark'] .rc-hero-bg::after {
 .rc-link-btn {
     background: none;
     border: none;
-    color: var(--rc-gold);
+    color: var(--ruto-brand-dark);
     font-weight: 600;
     text-decoration: underline;
     cursor: pointer;
@@ -1263,24 +1477,46 @@ html[data-theme='dark'] .rc-hero-bg::after {
     align-items: center;
     gap: 0.35rem;
     padding: 0.85rem 0.5rem;
-    border: 1px solid rgba(230, 162, 39, 0.25);
-    border-radius: var(--rc-radius);
+    border: 2px solid rgba(230, 162, 39, 0.25);
+    border-radius: 15px;
     background-color: var(--rc-surface);
     color: var(--rc-text);
     font-size: 0.8rem;
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rc-cat-tile:hover {
+    border-color: rgba(230, 162, 39, 0.4);
+    transform: translateY(-2px);
 }
 
 .rc-cat-tile.is-active {
-    border-color: var(--rc-gold);
-    background: var(--rc-gold-soft);
-    color: var(--rc-gold);
+    border-color: var(--ruto-brand);
+    background: rgba(230, 162, 39, 0.15);
+    color: var(--ruto-brand-dark);
 }
 
 .rc-cat-tile-icon {
     font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rc-cat-tile-icon svg {
+    color: var(--rc-muted);
+    transition: color 0.3s ease;
+}
+
+.rc-cat-tile.is-active .rc-cat-tile-icon svg {
+    color: var(--ruto-brand-dark);
+}
+
+.rc-cat-tile:hover .rc-cat-tile-icon svg {
+    color: var(--ruto-brand);
 }
 
 .rc-menu-heading--sm {
@@ -1296,12 +1532,12 @@ html[data-theme='dark'] .rc-hero-bg::after {
     display: flex;
     align-items: flex-start;
     gap: 0.85rem;
-    padding: 1rem;
+    padding: 1.25rem;
     margin-bottom: 1rem;
-    border-radius: var(--rc-radius);
+    border-radius: 15px;
     background-color: var(--rc-surface);
-    border: 1px solid rgba(230, 162, 39, 0.2);
-    box-shadow: var(--rc-shadow);
+    border: 2px solid rgba(230, 162, 39, 0.2);
+    box-shadow: 0 4px 20px rgba(230, 162, 39, 0.1);
 }
 
 .rc-meja-input-icon {
@@ -1618,8 +1854,8 @@ body:has(.rc-success-page) .rc-main {
 /* ─── Laptop / desktop ─── */
 @media (min-width: 1024px) {
     .rc-shell {
-        max-width: 1200px;
-        padding: 0 1.5rem;
+        max-width: 100%;
+        padding: 0;
     }
 
     .rc-hero {

@@ -1,12 +1,12 @@
-<div class="rc-cart-backdrop lg:hidden" x-show="cartOpen && tab === 'keranjang'" @click="cartOpen = false; tab = 'beranda'" x-transition.opacity></div>
+<div class="rc-cart-backdrop" x-show="cartOpen" @click="cartOpen = false; tab = 'beranda'" x-transition.opacity></div>
 
 <aside class="rc-cart-panel"
     :class="{ 'is-open': cartOpen, 'is-tab-active': tab === 'keranjang' }"
     role="region" aria-label="Keranjang">
     <div class="rc-cart-panel-header">
         <h2>Keranjang</h2>
-        <button type="button" @click="cartOpen = false; if (window.innerWidth < 1024) tab = 'beranda'"
-            class="rc-cart-close lg:hidden" aria-label="Tutup">&times;</button>
+        <button type="button" @click="cartOpen = false; tab = 'beranda'"
+            class="rc-cart-close" aria-label="Tutup">&times;</button>
     </div>
 
     <div class="rc-cart-panel-body">
@@ -37,6 +37,12 @@
         <div class="rc-cart-total">
             <span>Total</span>
             <strong x-text="formatRupiah(total)"></strong>
+        </div>
+        <div class="rc-input-group" style="margin-bottom: 12px;">
+            <label class="rc-label" for="cart-nomor-meja" style="font-weight: 600; display: block; margin-bottom: 6px; color: var(--rc-text);">Nomor Meja</label>
+            <input id="cart-nomor-meja" type="text" x-model="nomorMeja" class="rc-input"
+                placeholder="Masukkan Nomor Meja (Contoh: 12)" inputmode="numeric" autocomplete="off"
+                style="border: 1px solid rgba(230, 162, 39, 0.3); border-radius: 8px; width: 100%; box-sizing: border-box;">
         </div>
         <div class="rc-input-group">
             <label class="rc-label">Catatan (opsional)</label>
