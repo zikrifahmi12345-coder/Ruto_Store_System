@@ -41,4 +41,8 @@ chown -R www-data:www-data /var/www/html/bootstrap/cache
 echo "Testing php-fpm configuration..."
 php-fpm -t
 
+# Tail laravel log in background so it shows in Railway logs
+touch /var/www/html/storage/logs/laravel.log
+tail -f /var/www/html/storage/logs/laravel.log &
+
 echo "Application is ready!"
