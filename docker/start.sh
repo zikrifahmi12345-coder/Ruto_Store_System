@@ -1,13 +1,11 @@
 #!/bin/bash
 
 # Substitute PORT in nginx config
-export PORT=${PORT:-80}
+export PORT=${PORT:-8080}
 envsubst '$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf
 mv /tmp/nginx.conf /etc/nginx/nginx.conf
-
-# Debug: Check PORT and nginx config
 echo "PORT is: $PORT"
-cat /etc/nginx/nginx.conf | grep listen
+grep listen /etc/nginx/nginx.conf
 
 # Generate application key if not set
 if [ -z "$APP_KEY" ]; then
