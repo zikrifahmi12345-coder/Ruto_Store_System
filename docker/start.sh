@@ -35,4 +35,8 @@ echo "Setting permissions..."
 chown -R www-data:www-data /var/www/html/storage
 chown -R www-data:www-data /var/www/html/bootstrap/cache
 
+# Test php-fpm configuration
+echo "Testing php-fpm configuration..."
+php-fpm -t
+
 echo "Application is ready!"
