@@ -5,13 +5,6 @@ export PORT=${PORT:-80}
 envsubst '$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf
 mv /tmp/nginx.conf /etc/nginx/nginx.conf
 
-# Wait for database to be ready
-echo "Waiting for database..."
-while ! php artisan db:show --database=postgresql > /dev/null 2>&1; do
-    sleep 2
-done
-echo "Database is ready!"
-
 # Generate application key if not set
 if [ -z "$APP_KEY" ]; then
     echo "Generating APP_KEY..."
