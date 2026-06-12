@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Substitute PORT in nginx config
+export PORT=${PORT:-80}
+envsubst '$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf
+mv /tmp/nginx.conf /etc/nginx/nginx.conf
+
 # Wait for database to be ready
 echo "Waiting for database..."
 while ! php artisan db:show --database=postgresql > /dev/null 2>&1; do
