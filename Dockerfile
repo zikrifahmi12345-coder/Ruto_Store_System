@@ -6,6 +6,10 @@ RUN apt-get update && apt-get install -y git curl libpng-dev libonig-dev libxml2
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
+
+# Cache bust
+ARG CACHEBUST=1
+
 COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 storage bootstrap/cache
