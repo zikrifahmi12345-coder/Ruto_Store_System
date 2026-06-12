@@ -14,6 +14,11 @@ use App\Http\Controllers\KasirPesananController;
 use App\Http\Controllers\StokController;
 use Illuminate\Support\Facades\Route;
 
+// Health check endpoint for Railway
+Route::get('/health', function () {
+    return response('OK', 200);
+});
+
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->to(auth()->user()->homeRoute());
