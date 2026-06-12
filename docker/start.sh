@@ -5,6 +5,10 @@ export PORT=${PORT:-80}
 envsubst '$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf
 mv /tmp/nginx.conf /etc/nginx/nginx.conf
 
+# Debug: Check PORT and nginx config
+echo "PORT is: $PORT"
+cat /etc/nginx/nginx.conf | grep listen
+
 # Generate application key if not set
 if [ -z "$APP_KEY" ]; then
     echo "Generating APP_KEY..."
